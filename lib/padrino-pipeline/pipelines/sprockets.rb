@@ -1,5 +1,5 @@
 module Padrino
-  module Pipeline 
+  module Pipeline
     class Sprockets
 
       def initialize(app, config)
@@ -24,9 +24,10 @@ module Padrino
 
       def setup_sprockets
         paths.each { |path| @app.settings.assets.append_path path }
-        mount_js_assets    @config.js_prefix 
+        mount_js_assets    @config.js_prefix
         mount_css_assets   @config.css_prefix
         mount_image_assets @config.image_prefix
+        mount_font_assets  @config.font_prefix
       end
 
       def setup_enviroment
@@ -41,6 +42,11 @@ module Padrino
       def mount_image_assets(prefix)
         mount_assets(:prefix => prefix)
       end
+
+      def mount_font_assets(prefix)
+        mount_assets(:prefix => prefix)
+      end
+
 
       def mount_js_assets(prefix)
         mount_assets(:prefix => prefix,
