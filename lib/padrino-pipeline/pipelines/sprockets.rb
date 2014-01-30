@@ -16,10 +16,11 @@ module Padrino
       end
 
       def paths
-        js_assets    = @config.js_assets.kind_of?(Array)    ? @config.js_assets    : [@config.js_assets]
-        css_assets   = @config.css_assets.kind_of?(Array)   ? @config.css_assets   : [@config.css_assets]
-        image_assets = @config.image_assets.kind_of?(Array) ? @config.image_assets : [@config.image_assets]
-        js_assets + css_assets + image_assets
+        js_assets    = Array(@config.js_assets)
+        css_assets   = Array(@config.css_assets)
+        image_assets = Array(@config.image_assets)
+        font_assets  = Array(@config.font_assets)
+        js_assets + css_assets + image_assets + font_assets
       end
 
       def setup_sprockets
