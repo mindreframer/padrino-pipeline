@@ -2,9 +2,9 @@ module Padrino
   module Pipeline
     class Configuration
 
-      attr_accessor :pipeline,   :packages,  :prefix 
-      attr_accessor :css_prefix, :js_prefix, :image_prefix 
-      attr_accessor :css_assets, :js_assets, :image_assets
+      attr_accessor :pipeline,   :packages,  :prefix
+      attr_accessor :css_prefix, :js_prefix, :image_prefix, :font_prefix
+      attr_accessor :css_assets, :js_assets, :image_assets, :font_assets
       attr_accessor :js_compiled_output, :css_compiled_output, :compiled_output
       attr_accessor :js_compiled_asset,  :css_compiled_asset
       attr_accessor :enable_compression, :app
@@ -13,10 +13,12 @@ module Padrino
         @app          = app
         @packages     = []
         @image_prefix = '/assets/images'
+        @font_prefix  = '/assets/fonts'
         @js_prefix    = '/assets/javascripts'
         @css_prefix   = '/assets/stylesheets'
 
         @image_assets = "#{app_root}/assets/images"
+        @font_assets  = "#{app_root}/assets/fonts"
         @js_assets    = "#{app_root}/assets/javascripts"
         @css_assets   = "#{app_root}/assets/stylesheets"
 
@@ -52,16 +54,20 @@ module Padrino
         "#{prefix || ''}#{@css_prefix}"
       end
 
+      def font_prefix
+        "#{prefix || ''}#{@font_prefix}"
+      end
+
       def serve_compressed?
         enable_compression || PADRINO_ENV == "production"
       end
-      
+
       def asset_compiler
         @asset_compiler ||= match_compiler.new(self)
       end
 
       private
-      def pipeline_class 
+      def pipeline_class
         @pipeline.class.name
       end
 
