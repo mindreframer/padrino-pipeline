@@ -65,7 +65,9 @@ module Padrino
         prefix       = options[:prefix]
         extension    = options[:extension]
         content_type = options[:content_type]
-        @app.get "#{prefix}/:path.:ext" do |path, ext|
+        @app.get %r{\A#{prefix}/(.*)\Z} do |full_path|
+          *path, ext = full_path.split('.')
+          path = path.join('.')
           return not_found if (extension && ext != extension)
           content_type(content_type || Rack::Mime::MIME_TYPES[".#{ext}"])
           settings.assets["#{path}.#{ext}"] || not_found
